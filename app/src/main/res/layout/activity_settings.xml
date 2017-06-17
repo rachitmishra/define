@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="settingsViewModel"
+            type="in.ceeq.define.databinding.SettingsViewModel"/>
+
+        <import type="android.view.View"/>
+
+        <import type="android.text.TextUtils"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackgroundLight"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <ImageButton
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/close"
+                    android:gravity="start"
+                    android:minWidth="0dp"
+                    android:onClick="@{settingsViewModel::close}"
+                    android:textAllCaps="false"
+                    app:srcCompat="@drawable/ic_arrow_back_black_24dp"
+                    tools:text="Love"
+                    />
+
+                <in.ceeq.define.utils.ui.TextViewPlus
+                    style="@style/TextAppearance.AppCompat.Display1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/top_margin_16"
+                    android:text="@string/settings"
+                    android:textColor="@android:color/black"
+                    tools:text="Settings"
+                    />
+
+                <in.ceeq.define.utils.ui.TextViewPlus
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/top_margin_36"
+                    android:text="@string/title_to_language"
+                    android:textAllCaps="true"
+                    tools:text="@string/title_to_language"
+                    />
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/list_text_margin_vertical"
+                    android:layout_marginStart="@dimen/list_text_margin_vertical"
+                    android:layout_marginTop="@dimen/list_text_margin_vertical"
+                    android:entries="@array/language_array"
+                    android:onItemSelected="@{(p, v, pos, id) -> settingsViewModel.onLanguageSelected(v, pos)}"
+                    android:paddingBottom="@dimen/list_text_margin_vertical"
+                    android:paddingTop="@dimen/list_text_margin_vertical"
+                    android:selectedItemPosition="@{settingsViewModel.selectedLanguagePosition}"
+                    android:spinnerMode="dropdown"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/top_margin_24"
+                    android:background="@color/colorDivider"/>
+
+                <in.ceeq.define.utils.ui.ButtonPlus
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center_vertical"
+                    android:minHeight="0dp"
+                    android:onClick="@{settingsViewModel::feedbackApp}"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/feedback"
+                    android:textColor="@android:color/black"
+                    app:fontTypeface="regular"
+                    tools:text="@string/feedback"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="@color/colorDivider"/>
+
+                <in.ceeq.define.utils.ui.ButtonPlus
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center_vertical"
+                    android:minHeight="0dp"
+                    android:onClick="@{settingsViewModel::rateApp}"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/rate"
+                    android:textColor="@android:color/black"
+                    app:fontTypeface="regular"
+                    tools:text="@string/rate"
+                    />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="@color/colorDivider"/>
+
+                <in.ceeq.define.utils.ui.ButtonPlus
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="start|center_vertical"
+                    android:minHeight="0dp"
+                    android:onClick="@{settingsViewModel::shareApp}"
+                    android:paddingBottom="@dimen/activity_horizontal_margin"
+                    android:paddingLeft="0dp"
+                    android:paddingTop="@dimen/activity_horizontal_margin"
+                    android:text="@string/share"
+                    android:textColor="@android:color/black"
+                    app:fontTypeface="regular"
+                    tools:text="@string/share"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageButton
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/close"
+                    android:gravity="start|center"
+                    android:paddingRight="0dp"
+                    android:visibility="@{settingsViewModel.isUpdateAvailable ? View.VISIBLE : View.GONE}"
+                    android:minWidth="0dp"
+                    android:onClick="@{settingsViewModel::rateApp}"
+                    android:textAllCaps="false"
+                    app:srcCompat="@drawable/ic_cloud_download_black_24dp"
+                    tools:text="Love"
+                    />
+
+                <in.ceeq.define.utils.ui.TextViewPlus
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical"
+                    android:padding="@dimen/activity_horizontal_margin"
+                    android:linksClickable="true"
+                    android:text="@{settingsViewModel.appVersion}"
+                    tools:text="@string/app_version"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
+</layout>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Define</string>
+    <string name="enable_overlay_permissions">Enable overlay permissions</string>
+    <string name="settings">Settings</string>
+    <string name="no_result">No definition found.</string>
+    <string name="title_to_language">Define to language</string>
+    <string name="app_version_message">v%1$s | Powered by <a href="https://glosbe.com/">Glosbe</a></string>
+    <string name="close">Close</string>
+    <string name="powered_by">Powered by <a href="https://glosbe.com/">Glosbe</a></string>
+    <string name="allow">Allow</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="rate">Rate app</string>
+    <string name="feedback">Feedback</string>
+    <string name="share">Share app</string>
+    <string name="share_via">Share via</string>
+    <string name="send_email">Send email</string>
+    <string name="suggestions">Suggestions</string>
+    <string name="share_message">Define - Instant definitions in your native language.
+        Select a word, Tap on ⋮, Tap on Define. Download Now https://g2wsc.app.goo.gl/eNh4</string>
+    <string name="update_available_app">Update available</string>
+    <string name="update_available_notification">A new version of %1$s is available! Click to go to Play Store.</string>
+    <string name="force_update_message">Please update to continue using %1$s.</string>
+    <string name="definition_copied">Definition Copied</string>
+    <string-array name="language_array">
+        <item>Hindi</item>
+        <item>Kannada</item>
+        <item>Malayalam</item>
+        <item>English</item>
+        <item>Sanskrit</item>
+    </string-array>
+</resources>

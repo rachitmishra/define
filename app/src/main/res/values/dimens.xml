@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="list_text_margin_vertical">8dp</dimen>
+    <dimen name="top_margin_16">16dp</dimen>
+    <dimen name="top_margin_36">36dp</dimen>
+    <dimen name="top_margin_24">24dp</dimen>
+    <dimen name="margin_32">32dp</dimen>
+</resources>

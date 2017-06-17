@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="textSpacing" format="float" />
+    <attr name="fontTypeface" format="enum">
+        <enum name="regular" value="1" />
+        <enum name="bold" value="2" />
+    </attr>
+
+    <declare-styleable name="TextViewPlus">
+        <attr name="fontTypeface"/>
+        <attr name="textSpacing"/>
+    </declare-styleable>
+</resources>
