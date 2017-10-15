@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="definitionViewModel"
-            type="in.ceeq.define.databinding.DefinitionViewModel"/>
+            name="dvm"
+            type="in.ceeq.define.ui.viewmodel.DefinitionViewModel"/>
 
         <import type="android.view.View"/>
 
@@ -19,15 +19,16 @@
         android:layout_height="match_parent">
 
         <View
+            android:id="@+id/btnClose1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorBackground"
-            android:onClick="@{definitionViewModel::close}"/>
+            />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{definitionViewModel.progressViewVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{dvm.progressViewVisible ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <ProgressBar
@@ -44,12 +45,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_horizontal_margin"
             android:background="@android:color/background_light"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:clickable="true"
-            android:visibility="@{definitionViewModel.progressViewVisible ? View.GONE : View.VISIBLE}"
+            android:visibility="@{dvm.progressViewVisible ? View.GONE : View.VISIBLE}"
             tools:visibility="visible">
 
             <RelativeLayout
@@ -58,6 +58,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/btnSettings"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -65,7 +66,6 @@
                     android:contentDescription="@string/settings"
                     android:gravity="start"
                     android:minWidth="0dp"
-                    android:onClick="@{definitionViewModel::openSettings}"
                     android:textAllCaps="false"
                     app:srcCompat="@drawable/ic_settings_black_24dp"
                     tools:text="Love"
@@ -81,6 +81,7 @@
                     />
 
                 <ImageButton
+                    android:id="@+id/btnClose2"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -88,25 +89,24 @@
                     android:contentDescription="@string/close"
                     android:gravity="start"
                     android:minWidth="0dp"
-                    android:onClick="@{definitionViewModel::close}"
                     android:textAllCaps="false"
                     app:srcCompat="@drawable/ic_close_black_24dp"
                     tools:text="Love"
                     />
             </RelativeLayout>
 
-            <in.ceeq.define.utils.ui.TextViewPlus
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Large"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/top_margin_16"
-                android:text="@{definitionViewModel.phrase}"
+                android:text="@{dvm.definition.phrase}"
                 tools:text="Love"
                 />
 
-            <in.ceeq.define.utils.ui.TextViewPlus
+            <android.support.v7.widget.AppCompatTextView
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -114,37 +114,41 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:text="@string/no_result"
-                android:visibility="@{definitionViewModel.noResults ? View.VISIBLE : View.GONE}"
+                android:visibility="@{dvm.noResults ? View.VISIBLE : View.GONE}"
                 tools:text="No definition found."
                 />
 
 
-            <in.ceeq.define.utils.ui.TextViewPlus
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtDefinition"
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
-                android:text="@{definitionViewModel.definition}"
-                android:onLongClick="@{definitionViewModel::copyDefinition}"
+                android:longClickable="true"
+                android:text="@{dvm.definition.getDefinition()}"
                 android:textIsSelectable="true"
-                android:visibility="@{!TextUtils.isEmpty(definitionViewModel.definition) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getDefinition()) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
-            <in.ceeq.define.utils.ui.TextViewPlus
+
+            <!--android:onLongClick="@{(v) -> dvm.handleOnCopyDefinition(dvm.definition.getAlternateDefinition())}"-->
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/txtAlternateDefinition"
                 style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
-                android:textIsSelectable="true"
-                android:text="@{definitionViewModel.definition2}"
-                android:onLongClick="@{definitionViewModel::copyDefinition2}"
                 android:longClickable="true"
-                android:visibility="@{!TextUtils.isEmpty(definitionViewModel.definition2) ? View.VISIBLE : View.GONE}"
+                android:text="@{dvm.definition.getAlternateDefinition()}"
+                android:textIsSelectable="true"
+                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getAlternateDefinition()) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
@@ -156,9 +160,9 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@android:color/background_light"
                 android:orientation="vertical"
-                android:visibility="@{!TextUtils.isEmpty(definitionViewModel.suggestedPhrase) ? View.VISIBLE : View.GONE}">
+                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getSuggestedPhrase()) ? View.VISIBLE : View.GONE}">
 
-                <in.ceeq.define.utils.ui.TextViewPlus
+                <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -167,15 +171,17 @@
                     tools:text="Suggestions"
                     />
 
-                <in.ceeq.define.utils.ui.ButtonPlus
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnSuggestedPhrase"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="start"
-                    android:onClick="@{(v) -> definitionViewModel.loadSuggestedPhrase()}"
+                    android:paddingEnd="0dp"
                     android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
                     android:paddingStart="0dp"
-                    android:text="@{definitionViewModel.suggestedPhrase}"
+                    android:text="@{dvm.definition.getSuggestedPhrase()}"
                     android:textAllCaps="false"
                     tools:text="Love"
                     />

@@ -1,13 +1,12 @@
-package in.ceeq.define.utils;
-
-import android.app.Application;
+package `in`.ceeq.define.utils
 
 
-import in.ceeq.define.BuildConfig;
+import `in`.ceeq.define.BuildConfig
+import android.app.Application
 
-public class AnalyticsUtils {
+class AnalyticsUtils {
 
-    public void init(Application application) {
+    fun init(application: Application) {
         if (!BuildConfig.DEBUG) {
 
         } else {

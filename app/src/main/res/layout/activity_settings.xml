@@ -7,7 +7,7 @@
 
         <variable
             name="settingsViewModel"
-            type="in.ceeq.define.databinding.SettingsViewModel"/>
+            type="in.ceeq.define.ui.viewmodel.SettingsViewModel"/>
 
         <import type="android.view.View"/>
 
@@ -43,7 +43,7 @@
                     tools:text="Love"
                     />
 
-                <in.ceeq.define.utils.ui.TextViewPlus
+                <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Display1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     tools:text="Settings"
                     />
 
-                <in.ceeq.define.utils.ui.TextViewPlus
+                <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/top_margin_24"
                     android:background="@color/colorDivider"/>
 
-                <in.ceeq.define.utils.ui.ButtonPlus
+                <android.support.v7.widget.AppCompatButton
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="@color/colorDivider"/>
 
-                <in.ceeq.define.utils.ui.ButtonPlus
+                <android.support.v7.widget.AppCompatButton
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="@color/colorDivider"/>
 
-                <in.ceeq.define.utils.ui.ButtonPlus
+                <android.support.v7.widget.AppCompatButton
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
                     android:contentDescription="@string/close"
                     android:gravity="start|center"
                     android:paddingRight="0dp"
-                    android:visibility="@{settingsViewModel.isUpdateAvailable ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{settingsViewModel.updateAvailable ? View.VISIBLE : View.GONE}"
                     android:minWidth="0dp"
                     android:onClick="@{settingsViewModel::rateApp}"
                     android:textAllCaps="false"
@@ -184,7 +184,7 @@
                     tools:text="Love"
                     />
 
-                <in.ceeq.define.utils.ui.TextViewPlus
+                <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -3,6 +3,7 @@
     <string name="enable_overlay_permissions">Enable overlay permissions</string>
     <string name="settings">Settings</string>
     <string name="no_result">No definition found.</string>
+    <string name="no_internet">No internet.</string>
     <string name="title_to_language">Define to language</string>
     <string name="app_version_message">v%1$s | Powered by <a href="https://glosbe.com/">Glosbe</a></string>
     <string name="close">Close</string>
