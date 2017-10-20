@@ -7,7 +7,7 @@ import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.FORCE_UPDATE
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.NOTIFY
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.TRACKING
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.UPDATE
-import `in`.ceeq.define.ui.MainActivity
+import `in`.ceeq.define.ui.main.HomeActivity
 import `in`.ceeq.define.utils.LogUtils
 import `in`.ceeq.define.utils.PreferenceUtils
 import android.app.NotificationManager
@@ -26,10 +26,14 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.URL
 import java.util.*
+import javax.inject.Inject
 
 class MyFirebaseMessageService : FirebaseMessagingService() {
 
     private var mNotificationManager: NotificationManager? = null
+
+    @Inject
+    lateinit var preferenceUtils: PreferenceUtils
 
     private val randomNotificationId: Int
         get() = Random().nextInt(
@@ -54,7 +58,6 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
                 UPDATE -> buildUpdateNotification(false)
                 FORCE_UPDATE -> {
                     val updateVersion = remoteMessage.data[UPDATE_VERSION]
-                    val preferenceUtils = PreferenceUtils.newInstance(this)
                     if (!preferenceUtils.isUpdateAvailable && preferenceUtils.updateVersion == 0) {
                         val appVersionCode = BuildConfig.VERSION_CODE
                         if (appVersionCode <= Integer.valueOf(updateVersion)) {
@@ -94,7 +97,7 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
     }
 
     private fun buildCustomNotification(myFcmMessage: MyFirebaseMessage?) {
-        var intentApp = Intent(this, MainActivity::class.java)
+        var intentApp = Intent(this, HomeActivity::class.java)
 
         if (myFcmMessage!!.isUrlNotification) {
             intentApp = Intent(Intent.ACTION_VIEW)

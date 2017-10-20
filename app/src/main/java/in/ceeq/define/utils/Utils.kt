@@ -1,6 +1,9 @@
 package `in`.ceeq.define.utils
 
+import android.app.Activity
 import android.content.Context
+import android.databinding.DataBindingUtil
+import android.databinding.ViewDataBinding
 import android.net.ConnectivityManager
 import android.os.Build
 import android.text.Html
@@ -24,3 +27,6 @@ fun fromHtml(html: String): Spanned {
         Html.fromHtml(html)
     }
 }
+
+infix fun <T : ViewDataBinding> Activity.setDataBindingView(layout: Int): T =
+        DataBindingUtil.setContentView(this, layout)

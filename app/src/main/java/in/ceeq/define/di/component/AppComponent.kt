@@ -1,9 +1,8 @@
 package `in`.ceeq.define.di.component
 
 import `in`.ceeq.define.DefineApplication
-import `in`.ceeq.define.di.module.ActivityBindingModule
+import `in`.ceeq.define.di.module.ActivityBindings
 import `in`.ceeq.define.di.module.AppModule
-import `in`.ceeq.define.di.module.DataModule
 import `in`.ceeq.define.di.module.NetModule
 import android.app.Application
 import dagger.Component
@@ -12,9 +11,8 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = arrayOf(AppModule::class,
-        DataModule::class,
         NetModule::class,
-        ActivityBindingModule::class))
+        ActivityBindings::class))
 interface AppComponent : AndroidInjector<DefineApplication> {
     fun inject(application: Application)
 }

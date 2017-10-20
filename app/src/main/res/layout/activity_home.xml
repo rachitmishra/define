@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="dvm"
-            type="in.ceeq.define.ui.viewmodel.DefinitionViewModel"/>
+            name="viewModel"
+            type="in.ceeq.define.ui.home.HomeViewModel"/>
 
         <import type="android.view.View"/>
 
@@ -28,7 +28,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="@{dvm.progressViewVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.progressViewVisible ? View.VISIBLE : View.GONE}"
             tools:visibility="gone">
 
             <ProgressBar
@@ -49,7 +49,7 @@
             android:background="@android:color/background_light"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin"
-            android:visibility="@{dvm.progressViewVisible ? View.GONE : View.VISIBLE}"
+            android:visibility="@{viewModel.progressViewVisible ? View.GONE : View.VISIBLE}"
             tools:visibility="visible">
 
             <RelativeLayout
@@ -77,6 +77,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="@dimen/list_text_margin_vertical"
                     android:layout_marginTop="@dimen/list_text_margin_vertical"
+                    android:contentDescription="@string/app_name"
                     app:srcCompat="@drawable/ic_logo"
                     />
 
@@ -102,7 +103,7 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/top_margin_16"
-                android:text="@{dvm.definition.phrase}"
+                android:text="@{viewModel.definition.phrase}"
                 tools:text="Love"
                 />
 
@@ -114,7 +115,7 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:text="@string/no_result"
-                android:visibility="@{dvm.noResults ? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.noResults ? View.VISIBLE : View.GONE}"
                 tools:text="No definition found."
                 />
 
@@ -128,14 +129,14 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:longClickable="true"
-                android:text="@{dvm.definition.getDefinition()}"
+                android:text="@{viewModel.definition.getDefinition()}"
                 android:textIsSelectable="true"
-                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getDefinition()) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getDefinition()) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
 
-            <!--android:onLongClick="@{(v) -> dvm.handleOnCopyDefinition(dvm.definition.getAlternateDefinition())}"-->
+            <!--android:onLongClick="@{(v) -> viewModel.handleOnCopyDefinition(viewModel.definition.getAlternateDefinition())}"-->
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtAlternateDefinition"
@@ -146,9 +147,9 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:longClickable="true"
-                android:text="@{dvm.definition.getAlternateDefinition()}"
+                android:text="@{viewModel.definition.getAlternateDefinition()}"
                 android:textIsSelectable="true"
-                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getAlternateDefinition()) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getAlternateDefinition()) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
@@ -160,7 +161,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@android:color/background_light"
                 android:orientation="vertical"
-                android:visibility="@{!TextUtils.isEmpty(dvm.definition.getSuggestedPhrase()) ? View.VISIBLE : View.GONE}">
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getSuggestedPhrase()) ? View.VISIBLE : View.GONE}">
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"
@@ -181,7 +182,7 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingStart="0dp"
-                    android:text="@{dvm.definition.getSuggestedPhrase()}"
+                    android:text="@{viewModel.definition.getSuggestedPhrase()}"
                     android:textAllCaps="false"
                     tools:text="Love"
                     />

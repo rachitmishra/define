@@ -7,7 +7,7 @@
 
         <variable
             name="settingsViewModel"
-            type="in.ceeq.define.ui.viewmodel.SettingsViewModel"/>
+            type="in.ceeq.define.ui.settings.SettingsViewModel"/>
 
         <import type="android.view.View"/>
 
@@ -32,12 +32,12 @@
 
                 <ImageButton
                     style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/btnClose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/close"
                     android:gravity="start"
                     android:minWidth="0dp"
-                    android:onClick="@{settingsViewModel::close}"
                     android:textAllCaps="false"
                     app:srcCompat="@drawable/ic_arrow_back_black_24dp"
                     tools:text="Love"
@@ -68,13 +68,13 @@
                     />
 
                 <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spinnerLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/list_text_margin_vertical"
                     android:layout_marginStart="@dimen/list_text_margin_vertical"
                     android:layout_marginTop="@dimen/list_text_margin_vertical"
                     android:entries="@array/language_array"
-                    android:onItemSelected="@{(p, v, pos, id) -> settingsViewModel.onLanguageSelected(v, pos)}"
                     android:paddingBottom="@dimen/list_text_margin_vertical"
                     android:paddingTop="@dimen/list_text_margin_vertical"
                     android:selectedItemPosition="@{settingsViewModel.selectedLanguagePosition}"
@@ -90,6 +90,7 @@
                     android:background="@color/colorDivider"/>
 
                 <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnFeedback"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,7 +99,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center_vertical"
                     android:minHeight="0dp"
-                    android:onClick="@{settingsViewModel::feedbackApp}"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/activity_horizontal_margin"
@@ -116,6 +116,7 @@
                     android:background="@color/colorDivider"/>
 
                 <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnRateApp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +125,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center_vertical"
                     android:minHeight="0dp"
-                    android:onClick="@{settingsViewModel::rateApp}"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/activity_horizontal_margin"
@@ -142,6 +142,7 @@
                     android:background="@color/colorDivider"/>
 
                 <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btnShareApp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -150,7 +151,6 @@
                     android:background="?attr/selectableItemBackground"
                     android:gravity="start|center_vertical"
                     android:minHeight="0dp"
-                    android:onClick="@{settingsViewModel::shareApp}"
                     android:paddingBottom="@dimen/activity_horizontal_margin"
                     android:paddingLeft="0dp"
                     android:paddingTop="@dimen/activity_horizontal_margin"
@@ -166,20 +166,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageButton
                     style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/btnUpdateApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/close"
                     android:gravity="start|center"
-                    android:paddingRight="0dp"
-                    android:visibility="@{settingsViewModel.updateAvailable ? View.VISIBLE : View.GONE}"
                     android:minWidth="0dp"
-                    android:onClick="@{settingsViewModel::rateApp}"
+                    android:paddingRight="0dp"
                     android:textAllCaps="false"
+                    android:visibility="@{settingsViewModel.updateAvailable ? View.VISIBLE : View.GONE}"
                     app:srcCompat="@drawable/ic_cloud_download_black_24dp"
                     tools:text="Love"
                     />
@@ -188,11 +188,11 @@
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:gravity="center"
-                    android:layout_gravity="center_vertical"
-                    android:padding="@dimen/activity_horizontal_margin"
                     android:linksClickable="true"
+                    android:padding="@dimen/activity_horizontal_margin"
                     android:text="@{settingsViewModel.appVersion}"
                     tools:text="@string/app_version"
                     />

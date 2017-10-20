@@ -17,6 +17,10 @@ data class Definition(@SerializedName("result")
                       val dest: String = "hi") : Parcelable {
 
     fun getDefinition(): String {
+        if (tucs.isEmpty()) {
+            return ""
+        }
+
         val definitions = tucs.map { it.phrase.text }.take(MAX_DEFINITIONS)
 
         if (definitions.isNotEmpty()) {
@@ -27,6 +31,10 @@ data class Definition(@SerializedName("result")
     }
 
     fun getAlternateDefinition(): String {
+        if (tucs.isEmpty()) {
+            return ""
+        }
+
         val alternateDefinition = tucs.filter { it.meanings.isNotEmpty() }.flatMap { it.meanings }.map { it.text }[0]
 
         if (alternateDefinition.isEmpty()) {

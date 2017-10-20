@@ -1,10 +1,11 @@
-package `in`.ceeq.define.ui.viewmodel
+package `in`.ceeq.define.ui.home
 
 
 import `in`.ceeq.define.BR
 import `in`.ceeq.define.R
 import `in`.ceeq.define.data.DefineRepository
 import `in`.ceeq.define.data.entity.Definition
+import `in`.ceeq.define.utils.LogUtils
 import `in`.ceeq.define.utils.PreferenceUtils
 import android.content.res.Resources
 import android.databinding.BaseObservable
@@ -14,9 +15,9 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-class DefinitionViewModel @Inject constructor(private val resources: Resources,
-                                              private val preferenceUtils: PreferenceUtils,
-                                              private val defineRepository: DefineRepository) : BaseObservable() {
+class HomeViewModel @Inject constructor(private val resources: Resources,
+                                        private val preferenceUtils: PreferenceUtils,
+                                        private val defineRepository: DefineRepository) : BaseObservable() {
 
     @get:Bindable
     var isProgressViewVisible: Boolean = false
@@ -89,6 +90,7 @@ class DefinitionViewModel @Inject constructor(private val resources: Resources,
                 .subscribe({
                     definition = it
                 }, {
+                    LogUtils.log("Failed to get definition!")
                 })
     }
 

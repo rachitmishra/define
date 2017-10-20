@@ -4,18 +4,10 @@ import `in`.ceeq.define.data.api.DefinitionApi
 import `in`.ceeq.define.data.api.RandomWordApi
 import `in`.ceeq.define.data.entity.Definition
 import io.reactivex.Single
-import retrofit2.Retrofit
+import javax.inject.Inject
 
-object DefineRepository {
-
-    private lateinit var mDefinitionApi: DefinitionApi
-    private lateinit var mRandomWordApi: RandomWordApi
-
-    fun create(retrofit: Retrofit) =
-            this.apply {
-                mDefinitionApi = DefinitionApi.create(retrofit)
-                mRandomWordApi = RandomWordApi.create(retrofit)
-            }
+class DefineRepository @Inject constructor(private val mDefinitionApi: DefinitionApi,
+                                           private val mRandomWordApi: RandomWordApi) {
 
     fun getDefinition(phrase: String, dest: String = "en"): Single<Definition> =
             mDefinitionApi.getDefinition(phrase, dest = dest)

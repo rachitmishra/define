@@ -4,7 +4,7 @@ buildscript {
 
     ext {
         kotlin_plugin_version = '1.1.51'
-        android_plugin_version = '3.0.0-rc1'
+        android_plugin_version = '3.0.0-rc2'
         google_services_version = '3.1.0'
         firebase_library_version = '11.4.2'
         support_library_version = '26.1.0'

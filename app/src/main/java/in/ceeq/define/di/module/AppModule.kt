@@ -1,7 +1,9 @@
 package `in`.ceeq.define.di.module
 
-import `in`.ceeq.define.utils.PreferenceUtils
 import android.app.Application
+import android.content.SharedPreferences
+import android.content.res.Resources
+import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,5 +18,9 @@ class AppModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun providesPreferenceUtils(): PreferenceUtils = PreferenceUtils.newInstance(application)
+    fun providesPreferenceUtils(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
+
+    @Provides
+    @Singleton
+    fun providesResources(): Resources = application.resources
 }

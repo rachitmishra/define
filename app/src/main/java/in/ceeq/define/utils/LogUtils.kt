@@ -16,13 +16,13 @@ object LogUtils {
 
     }
 
-    fun log(tag: String, message: String) {
+    fun log(message: String, tag: String = BuildConfig.APPLICATION_ID) {
         if (BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, message)
         }
     }
 
-    fun log(tag: String, message: String, cause: Throwable) {
+    fun log(message: String, cause: Throwable, tag: String = BuildConfig.APPLICATION_ID) {
         if (BuildConfig.DEBUG || Log.isLoggable(tag, Log.DEBUG)) {
             Log.d(tag, message, cause)
         }

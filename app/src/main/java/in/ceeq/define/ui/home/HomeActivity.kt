@@ -1,9 +1,11 @@
-package `in`.ceeq.define.ui
+package `in`.ceeq.define.ui.main
 
 import `in`.ceeq.define.R
-import `in`.ceeq.define.databinding.ActivityMainBinding
-import `in`.ceeq.define.ui.viewmodel.DefinitionViewModel
+import `in`.ceeq.define.databinding.ActivityHomeBinding
+import `in`.ceeq.define.ui.home.HomeViewModel
+import `in`.ceeq.define.ui.settings.SettingsActivity
 import `in`.ceeq.define.utils.isNetConnected
+import `in`.ceeq.define.utils.setDataBindingView
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -12,30 +14,30 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import dagger.android.AndroidInjection
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
     @Inject
-    lateinit var mDefinitionViewModel: DefinitionViewModel
+    lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val activityMainBinding = ActivityMainBinding.inflate(layoutInflater)
-        activityMainBinding.dvm = mDefinitionViewModel
+        val activityHomeBinding = setDataBindingView<ActivityHomeBinding>(R.layout.activity_home)
+        activityHomeBinding.viewModel = homeViewModel
 
         title = ""
 
         val text = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
 
         if (null != text) {
-            mDefinitionViewModel.phrase = text.toString()
+            homeViewModel.phrase = text.toString()
         }
 
+        initHandlers()
         loadDefinition()
     }
 
@@ -53,11 +55,11 @@ class MainActivity : AppCompatActivity() {
             handleLoadSuggestionClick()
         }
         txtDefinition.setOnLongClickListener {
-            handleCopyDefinition(mDefinitionViewModel.definition.getDefinition())
+            handleCopyDefinition(homeViewModel.definition.getDefinition())
             true
         }
         txtDefinition.setOnLongClickListener {
-            handleCopyDefinition(mDefinitionViewModel.definition.getAlternateDefinition())
+            handleCopyDefinition(homeViewModel.definition.getAlternateDefinition())
             true
         }
     }
@@ -67,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleLoadSuggestionClick() {
-        mDefinitionViewModel.loadSuggestedPhrase()
+        homeViewModel.loadSuggestedPhrase()
     }
 
     private fun handleOpenSettings() {
@@ -80,13 +82,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleCopyDefinition(text: String) {
         val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboardManager.primaryClip = ClipData.newPlainText(mDefinitionViewModel.phrase, text)
+        clipboardManager.primaryClip = ClipData.newPlainText(homeViewModel.phrase, text)
         Toast.makeText(this, R.string.definition_copied, Toast.LENGTH_SHORT).show()
     }
 
     private fun loadDefinition() {
         if (isNetConnected(this)) {
-            mDefinitionViewModel.loadDefinition()
+            homeViewModel.loadDefinition()
         } else {
             Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
         }
