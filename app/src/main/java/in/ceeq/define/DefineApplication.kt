@@ -1,11 +1,9 @@
 package `in`.ceeq.define
 
 import `in`.ceeq.define.di.component.DaggerAppComponent
-import `in`.ceeq.define.di.module.AppModule
 import `in`.ceeq.define.utils.AnalyticsUtils
 import android.app.Activity
 import android.app.Application
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import javax.inject.Inject
@@ -23,7 +21,7 @@ class DefineApplication : Application(), HasActivityInjector {
         AnalyticsUtils().init(this)
 
         DaggerAppComponent.builder()
-                .appModule(AppModule(this))
+                .app(this)
                 .build().inject(this)
     }
 

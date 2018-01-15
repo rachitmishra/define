@@ -129,14 +129,12 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:longClickable="true"
-                android:text="@{viewModel.definition.getDefinition()}"
+                android:text="@{viewModel.definition.definition}"
                 android:textIsSelectable="true"
-                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getDefinition()) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.definition) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
-
-            <!--android:onLongClick="@{(v) -> viewModel.handleOnCopyDefinition(viewModel.definition.getAlternateDefinition())}"-->
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/txtAlternateDefinition"
@@ -147,9 +145,9 @@
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/list_text_margin_vertical"
                 android:longClickable="true"
-                android:text="@{viewModel.definition.getAlternateDefinition()}"
+                android:text="@{viewModel.definition.alternateDefinition}"
                 android:textIsSelectable="true"
-                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getAlternateDefinition()) ? View.VISIBLE : View.GONE}"
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.alternateDefinition) ? View.VISIBLE : View.GONE}"
                 tools:text="To have a strong affection for."
                 />
 
@@ -161,7 +159,7 @@
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@android:color/background_light"
                 android:orientation="vertical"
-                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.getSuggestedPhrase()) ? View.VISIBLE : View.GONE}">
+                android:visibility="@{!TextUtils.isEmpty(viewModel.definition.suggestedPhrase) ? View.VISIBLE : View.GONE}">
 
                 <android.support.v7.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"

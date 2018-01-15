@@ -55,11 +55,11 @@ class HomeActivity : AppCompatActivity() {
             handleLoadSuggestionClick()
         }
         txtDefinition.setOnLongClickListener {
-            handleCopyDefinition(homeViewModel.definition.getDefinition())
+            handleCopyDefinition(homeViewModel.definition.definition)
             true
         }
         txtDefinition.setOnLongClickListener {
-            handleCopyDefinition(homeViewModel.definition.getAlternateDefinition())
+            handleCopyDefinition(homeViewModel.definition.alternateDefinition)
             true
         }
     }

@@ -53,7 +53,7 @@ class PreferenceUtils @Inject constructor(val mSharedPreferences: SharedPreferen
 }
 
 fun PreferenceUtils.getFloat(key: String, defaultValue: Float = 0F): Float {
-    return mSharedPreferences.getFloat(key, 0f)
+    return mSharedPreferences.getFloat(key, defaultValue)
 }
 
 fun PreferenceUtils.getBooleanPrefs(key: String, defaultValue: Boolean = false): Boolean {

@@ -47,19 +47,21 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
             notifyPropertyChanged(BR.phrase)
         }
 
-    private val dest: String
-        get() {
-            val selectedLanguagePosition = preferenceUtils.selectedLanguagePosition
-            return resources.getStringArray(R.array.language_array)[selectedLanguagePosition].substring(0, 3).toLowerCase()
-        }
 
+    @get:Bindable
     var definition: Definition = Definition()
-        @Bindable
-        get() = field
-        set(value) {
+        set(definition) {
+            field = definition
             notifyPropertyChanged(BR.definition)
         }
 
+    private val dest: String
+        get() {
+            val selectedLanguagePosition = preferenceUtils.selectedLanguagePosition
+            return resources.getStringArray(R.array.language_array)[selectedLanguagePosition]
+                    .substring(0, 3)
+                    .toLowerCase()
+        }
 
     private fun loadDefinition(dest: String = "") {
         defineRepository.
@@ -71,6 +73,7 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
                 .subscribe({
                     definition = it
                 }, {
+                    LogUtils.log("Failed to get definition!")
                 })
     }
 
@@ -82,7 +85,10 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
 
         defineRepository.
                 getDefinition()
-                .flatMap { defineRepository.getDefinition(it) }
+                .flatMap {
+                    this.phrase = it
+                    defineRepository.getDefinition(it, dest)
+                }
                 .doOnSubscribe { isProgressViewVisible = true }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -95,7 +101,7 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
     }
 
     fun loadSuggestedPhrase() {
-        loadDefinition(definition.getSuggestedPhrase())
+        loadDefinition(definition.suggestedPhrase)
     }
 
 }

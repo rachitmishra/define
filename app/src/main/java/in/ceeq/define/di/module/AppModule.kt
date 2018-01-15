@@ -10,17 +10,13 @@ import javax.inject.Singleton
 
 
 @Module
-class AppModule(private val application: Application) {
+class AppModule {
 
     @Provides
     @Singleton
-    fun providesApplication(): Application = application
+    fun providesPreferenceUtils(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
 
     @Provides
     @Singleton
-    fun providesPreferenceUtils(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
-
-    @Provides
-    @Singleton
-    fun providesResources(): Resources = application.resources
+    fun providesResources(application: Application): Resources = application.resources
 }

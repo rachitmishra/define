@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Tuc(@SerializedName("phrase")
-               val phrase: Meaning,
+               val phrase: Meaning?,
                @SerializedName("meanings")
-               val meanings: ArrayList<Meaning>): Parcelable
+               val meanings: ArrayList<Meaning> = arrayListOf()) : Parcelable
