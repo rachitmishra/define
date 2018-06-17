@@ -4,23 +4,36 @@ import `in`.ceeq.define.R
 import `in`.ceeq.define.databinding.ActivityHomeBinding
 import `in`.ceeq.define.ui.settings.SettingsActivity
 import `in`.ceeq.define.utils.LogUtils
+import `in`.ceeq.define.utils.PermissionUtils
 import `in`.ceeq.define.utils.isNetConnected
 import `in`.ceeq.define.utils.setDataBindingView
+import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.chip.Chip
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_home.*
 import javax.inject.Inject
+
 
 class HomeActivity : AppCompatActivity() {
 
     @Inject
     lateinit var homeViewModel: HomeViewModel
+
+    private var cameraFileUrl: String? = null
+
+    companion object {
+        const val RC_CAMERA = 101
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -48,9 +61,7 @@ class HomeActivity : AppCompatActivity() {
         btnClose2.setOnClickListener {
             onClose()
         }
-        btnSuggestedPhrase.setOnClickListener {
-            loadDefinition(homeViewModel.suggestedPhrase.get())
-        }
+
         definition.setOnLongClickListener {
             handleCopyDefinition(homeViewModel.definition.get())
             true
@@ -59,7 +70,63 @@ class HomeActivity : AppCompatActivity() {
             handleCopyDefinition(homeViewModel.alternateDefinition.get())
             true
         }
+
+        btnCamera.setOnClickListener {
+            if (PermissionUtils.requestStoragePermission(this)) {
+                cameraFileUrl = CameraHelper.takePhoto(this, RC_CAMERA)
+            }
+        }
+
+        homeViewModel.suggestedPhrases.observe(this, Observer {
+            it?.forEach {
+                suggestedPhrases.addView(Chip(this).apply {
+                    text = it
+                    setOnClickListener {
+                        suggestedPhrases.removeAllViews()
+                        loadDefinition((it as Chip).text.toString())
+                    }
+                })
+            }
+        })
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == RC_CAMERA && resultCode == Activity.RESULT_OK) {
+            recogniseText()
+        }
+    }
+
+    private fun recogniseText() {
+        if (cameraFileUrl == null) {
+            return
+        }
+
+        val fileUri = CameraHelper.getUriFromFilePath(this, cameraFileUrl!!)
+        val image = FirebaseVisionImage.fromFilePath(this, fileUri)
+        val detector = FirebaseVision.getInstance()
+                .visionTextDetector
+
+        detector.detectInImage(image)
+                .addOnSuccessListener {
+                    it.blocks
+                            .flatMap { it.lines }
+                            .flatMap { it.text.split(' ') }.forEach {
+                                detectedPhrases.removeAllViews()
+                                detectedPhrases.addView(Chip(this).apply {
+                                    text = it
+                                    setOnClickListener {
+                                        loadDefinition((it as Chip).text.toString())
+                                    }
+                                })
+                            }
+
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show()
+                }
+    }
+
 
     private fun onClose() {
         finish()
@@ -101,5 +168,12 @@ class HomeActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         finish()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (PermissionUtils.checkStoragePermissionGranted(requestCode, grantResults)) {
+            cameraFileUrl = CameraHelper.takePhoto(this, RC_CAMERA)
+        }
     }
 }

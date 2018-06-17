@@ -5,9 +5,12 @@ import `in`.ceeq.define.R
 import `in`.ceeq.define.data.DefineRepository
 import `in`.ceeq.define.data.entity.Definition
 import `in`.ceeq.define.utils.PreferenceUtils
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.res.Resources
 import android.databinding.ObservableField
+import android.text.Html
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -30,7 +33,11 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
 
     val alternateDefinition = ObservableField<String>()
 
-    val suggestedPhrase = ObservableField<String>()
+    private val _suggestedPhrases = MutableLiveData<List<String>>()
+    val suggestedPhrases: LiveData<List<String>>
+        get() = _suggestedPhrases
+
+    val detectedWords = ObservableField<String>()
 
     private val dest: String
         get() {
@@ -62,13 +69,13 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
 
         phrase.set(result.phrase)
 
-        val definitionStr = tucs.dropWhile { it.phrase == null }
+        val definitionStr = tucs.dropWhile { it.phrase != null }
                 .map { it.phrase?.text }
                 .filter { it != null }
                 .take(Definition.MAX_DEFINITIONS).joinToString()
 
         val altDefinitionStr =
-                tucs.takeWhile { it.meanings == null }
+                tucs.takeWhile { it.meanings != null }
                         .flatMap { it.meanings!! }
                         .map { it.text }
                         .filter { it != null }
@@ -76,13 +83,15 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
 
 
         when {
-            definitionStr.isNotEmpty() -> definition.set(definitionStr)
-            definitionStr.isNotEmpty() && altDefinitionStr.isNotEmpty() -> alternateDefinition.set(altDefinitionStr)
-            definitionStr.isEmpty() && altDefinitionStr.isNotEmpty() -> definition.set(altDefinitionStr)
+            definitionStr.isNotEmpty() -> definition.set(Html.fromHtml(definitionStr).toString())
+            definitionStr.isNotEmpty() && altDefinitionStr.isNotEmpty() -> alternateDefinition.set(
+                    Html.fromHtml(altDefinitionStr).toString())
+            definitionStr.isEmpty() && altDefinitionStr.isNotEmpty() -> definition.set(
+                    Html.fromHtml(altDefinitionStr).toString())
             definitionStr.isEmpty() && altDefinitionStr.isEmpty() -> hasNoResults.set(true)
         }
 
-        suggestedPhrase.set(
+        _suggestedPhrases.value = listOf(
                 result.phrase.apply {
                     when {
                         endsWith("ing") -> replace("ing", "")
@@ -103,11 +112,10 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
                         startsWith("auto") -> replace("auto", "")
                         else -> phrase
                     }
-                }
-        )
+                })
     }
 
-    fun handleApiFailure() {
-
+    fun onWordsDetected(listOfWords: List<String>) {
+        detectedWords.set(listOfWords.joinToString())
     }
 }

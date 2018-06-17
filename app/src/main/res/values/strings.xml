@@ -2,6 +2,7 @@
     <string name="app_name">Define</string>
     <string name="enable_overlay_permissions">Enable overlay permissions</string>
     <string name="settings">Settings</string>
+    <string name="use_camera">Use Camera</string>
     <string name="no_result">No definition found.</string>
     <string name="no_internet">No internet.</string>
     <string name="title_to_language">Define to language</string>
@@ -16,12 +17,15 @@
     <string name="share_via">Share via</string>
     <string name="send_email">Send email</string>
     <string name="suggestions">Suggestions</string>
+    <string name="detected">Detected</string>
     <string name="share_message">Define - Instant definitions in your native language.
         Select a word, Tap on ⋮, Tap on Define. Download Now https://g2wsc.app.goo.gl/eNh4</string>
     <string name="update_available_app">Update available</string>
     <string name="update_available_notification">A new version of %1$s is available! Click to go to Play Store.</string>
     <string name="force_update_message">Please update to continue using %1$s.</string>
     <string name="definition_copied">Definition Copied</string>
+    <string name="permission_denied_external_storage">Can\'t take picture. Permission was denied.</string>
+    <string name="permission_denied">Permission was denied.</string>
     <string-array name="language_array">
         <item>Hindi</item>
         <item>Kannada</item>

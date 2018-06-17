@@ -25,7 +25,7 @@
             tools:visibility="gone"
             />
 
-        <android.support.v7.widget.CardView
+        <android.support.design.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -51,7 +51,7 @@
                     tools:visibility="visible"/>
 
                 <ImageButton
-                    android:id="@+id/btnSettings"
+                    android:id="@+id/btnCamera"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,12 +59,14 @@
                     android:gravity="start"
                     android:minWidth="0dp"
                     android:textAllCaps="false"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@+id/phrase"
                     app:layout_constraintEnd_toStartOf="@+id/logo"
                     app:layout_constraintHorizontal_chainStyle="spread_inside"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintVertical_chainStyle="packed"
-                    app:srcCompat="@drawable/ic_settings_black_24dp"
+                    app:srcCompat="@drawable/ic_photo_camera_black_24dp"
                     tools:text="Love"
                     />
 
@@ -76,11 +78,30 @@
                     android:layout_marginBottom="@dimen/list_text_margin_vertical"
                     android:layout_marginTop="@dimen/list_text_margin_vertical"
                     android:contentDescription="@string/app_name"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnSettings"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnCamera"
                     app:layout_constraintEnd_toStartOf="@+id/btnClose2"
-                    app:layout_constraintStart_toEndOf="@+id/btnSettings"
-                    app:layout_constraintTop_toTopOf="@+id/btnSettings"
+                    app:layout_constraintStart_toEndOf="@+id/btnCamera"
+                    app:layout_constraintTop_toTopOf="@+id/btnCamera"
                     app:srcCompat="@drawable/ic_logo"
+                    />
+
+                <ImageButton
+                    android:id="@+id/btnSettings"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/settings"
+                    android:gravity="start"
+                    android:minWidth="0dp"
+                    android:textAllCaps="false"
+                    app:layout_constraintTop_toTopOf="@+id/logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/logo"
+                    app:layout_constraintEnd_toStartOf="@+id/btnClose2"
+                    app:layout_constraintHorizontal_chainStyle="spread_inside"
+                    app:layout_constraintStart_toEndOf="@+id/logo"
+                    app:layout_constraintVertical_chainStyle="packed"
+                    app:srcCompat="@drawable/ic_settings_black_24dp"
+                    tools:text="Love"
                     />
 
                 <ImageButton
@@ -92,10 +113,10 @@
                     android:contentDescription="@string/close"
                     android:minWidth="0dp"
                     android:textAllCaps="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/logo"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnSettings"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/logo"
-                    app:layout_constraintTop_toTopOf="@+id/logo"
+                    app:layout_constraintStart_toEndOf="@+id/btnSettings"
+                    app:layout_constraintTop_toTopOf="@+id/btnSettings"
                     app:srcCompat="@drawable/ic_close_black_24dp"
                     tools:text="Love"
                     />
@@ -108,7 +129,7 @@
                     android:layout_marginTop="@dimen/top_margin_16"
                     android:text="@{viewModel.phrase}"
                     app:layout_constraintBottom_toTopOf="@+id/definition"
-                    app:layout_constraintTop_toBottomOf="@+id/btnSettings"
+                    app:layout_constraintTop_toBottomOf="@+id/btnCamera"
                     tools:text="Love"
                     />
 
@@ -162,15 +183,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/activity_horizontal_margin"
                     android:text="@string/suggestions"
-                    app:layout_constraintBottom_toTopOf="@+id/btnSuggestedPhrase"
+                    app:layout_constraintBottom_toTopOf="@+id/suggestedPhrases"
                     app:layout_constraintTop_toBottomOf="@+id/alternateDefinition"
                     tools:text="Suggestions"
                     android:visibility="@{viewModel.isProgressViewVisible ? View.GONE : View.VISIBLE}"
 
                     />
 
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/btnSuggestedPhrase"
+                <android.support.design.chip.ChipGroup
+                    android:id="@+id/suggestedPhrases"
                     style="@style/Widget.AppCompat.Button.Borderless.Colored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -179,15 +200,46 @@
                     android:paddingLeft="0dp"
                     android:paddingRight="0dp"
                     android:paddingStart="0dp"
-                    android:text="@{viewModel.suggestedPhrase}"
+                    android:textAllCaps="false"
+                    app:layout_constraintBottom_toTopOf="@+id/detected"
+                    app:layout_constraintTop_toBottomOf="@+id/suggestion"
+                    tools:text="Love">
+                </android.support.design.chip.ChipGroup>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/detected"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/detected"
+                    app:layout_constraintBottom_toTopOf="@+id/detectedPhrases"
+                    app:layout_constraintTop_toBottomOf="@+id/suggestedPhrases"
+                    tools:text="Detected"
+                    android:visibility="@{viewModel.isProgressViewVisible ? View.GONE : View.VISIBLE}"
+
+                    />
+
+                <android.support.design.chip.ChipGroup
+                    android:id="@+id/detectedPhrases"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:paddingEnd="0dp"
+                    android:paddingLeft="0dp"
+                    android:paddingRight="0dp"
+                    android:paddingStart="0dp"
                     android:textAllCaps="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/suggestion"
-                    tools:text="Love"/>
+                    app:layout_constraintTop_toBottomOf="@+id/detected"
+                    tools:text="Love">
+                </android.support.design.chip.ChipGroup>
+
+
 
             </android.support.constraint.ConstraintLayout>
 
-        </android.support.v7.widget.CardView>
+        </android.support.design.card.MaterialCardView>
 
 
     </FrameLayout>
