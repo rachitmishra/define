@@ -1,8 +1,8 @@
 package `in`.ceeq.define.di.module
 
 import `in`.ceeq.define.BuildConfig
-import `in`.ceeq.define.data.api.DefinitionApi
-import `in`.ceeq.define.data.api.RandomWordApi
+import `in`.ceeq.define.data.source.DefinitionApi
+import `in`.ceeq.define.data.source.RandomWordApi
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -10,7 +10,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -54,8 +53,8 @@ class NetModule {
         @Named("random")
         fun provideRetrofitRandom(okHttpClient: OkHttpClient): Retrofit =
                 Retrofit.Builder()
-                        .baseUrl("http://setgetgo.com/")
-                        .addConverterFactory(ScalarsConverterFactory.create())
+                        .baseUrl("https://api.wordnik.com/v4/")
+                        .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .client(okHttpClient)
                         .build()

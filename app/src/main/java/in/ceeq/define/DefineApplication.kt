@@ -4,17 +4,17 @@ import `in`.ceeq.define.di.component.DaggerAppComponent
 import `in`.ceeq.define.utils.AnalyticsUtils
 import android.app.Activity
 import android.app.Application
+import android.app.Service
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import javax.inject.Inject
 
 
 class DefineApplication : Application(), HasActivityInjector {
 
-    override fun activityInjector(): DispatchingAndroidInjector<Activity> = mAndroidInjector
-
     @Inject
-    lateinit var mAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var androidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
@@ -25,5 +25,5 @@ class DefineApplication : Application(), HasActivityInjector {
                 .build().inject(this)
     }
 
-
+    override fun activityInjector(): DispatchingAndroidInjector<Activity> = androidInjector
 }

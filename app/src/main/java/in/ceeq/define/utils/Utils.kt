@@ -6,18 +6,14 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.net.ConnectivityManager
 import android.os.Build
+import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.text.Spanned
 
-fun isNetConnected(context: Context?): Boolean {
-    return if (context != null) {
-        val cm = context.getSystemService(Context
-                .CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = cm.activeNetworkInfo
-        !(networkInfo == null || !networkInfo.isConnectedOrConnecting)
-    } else {
-        false
-    }
+fun AppCompatActivity.isNetConnected(): Boolean {
+    val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val networkInfo = cm.activeNetworkInfo
+    return !(networkInfo == null || !networkInfo.isConnectedOrConnecting)
 }
 
 fun fromHtml(html: String): Spanned {

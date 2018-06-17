@@ -1,17 +1,26 @@
 package `in`.ceeq.define.data
 
-import `in`.ceeq.define.data.api.DefinitionApi
-import `in`.ceeq.define.data.api.RandomWordApi
 import `in`.ceeq.define.data.entity.Definition
+import `in`.ceeq.define.data.source.DefinitionApi
+import `in`.ceeq.define.data.source.DefinitionDataSource
+import `in`.ceeq.define.data.source.RandomWordApi
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class DefineRepository @Inject constructor(private val mDefinitionApi: DefinitionApi,
-                                           private val mRandomWordApi: RandomWordApi) {
+class DefineRepository @Inject constructor(private val definitionApi: DefinitionApi,
+                                           private val randomWordApi: RandomWordApi,
+                                           private val datasource: DefinitionDataSource) {
 
     fun getDefinition(phrase: String, dest: String = "en"): Single<Definition> =
-            mDefinitionApi.getDefinition(phrase, dest = dest)
+            definitionApi.getDefinition(phrase, dest = dest)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
 
-    fun getDefinition(): Single<String> =
-            mRandomWordApi.getRandomWord()
+    fun getRandomWord(): Single<String> =
+            randomWordApi.getRandomWord()
+                    .map { it.word }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
 }

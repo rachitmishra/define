@@ -14,7 +14,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providesPreferenceUtils(application: Application): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(application)
+    fun providesPreferenceUtils(application: Application): SharedPreferences =
+            PreferenceManager.getDefaultSharedPreferences(application)
 
     @Provides
     @Singleton

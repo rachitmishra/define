@@ -1,59 +1,36 @@
 package `in`.ceeq.define.ui.home
 
 
-import `in`.ceeq.define.BR
 import `in`.ceeq.define.R
 import `in`.ceeq.define.data.DefineRepository
 import `in`.ceeq.define.data.entity.Definition
-import `in`.ceeq.define.utils.LogUtils
 import `in`.ceeq.define.utils.PreferenceUtils
+import android.arch.lifecycle.ViewModel
 import android.content.res.Resources
-import android.databinding.BaseObservable
-import android.databinding.Bindable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import android.databinding.ObservableField
+import io.reactivex.Single
 import javax.inject.Inject
 
 
 class HomeViewModel @Inject constructor(private val resources: Resources,
                                         private val preferenceUtils: PreferenceUtils,
-                                        private val defineRepository: DefineRepository) : BaseObservable() {
+                                        private val defineRepository: DefineRepository) : ViewModel() {
 
-    @get:Bindable
-    var isProgressViewVisible: Boolean = false
-        private set(progressViewVisible) {
-            field = progressViewVisible
-            notifyPropertyChanged(BR.progressViewVisible)
-        }
+    val suffix = arrayOf("ing", "ed", "led", "ling", "tted", "ted", "less", "ly", "wise")
 
-    @get:Bindable
-    var isNoResults: Boolean = false
-        set(noResults) {
-            field = noResults
-            notifyPropertyChanged(BR.noResults)
-        }
+    var isProgressViewVisible = ObservableField<Boolean>(false)
 
-    @get:Bindable
-    var forceUpdate: Boolean = false
-        set(forceUpdate) {
-            field = forceUpdate
-            notifyPropertyChanged(BR.forceUpdate)
-        }
+    var hasNoResults = ObservableField<Boolean>(false)
 
-    @get:Bindable
-    var phrase: String = ""
-        set(phrase) {
-            field = phrase
-            notifyPropertyChanged(BR.phrase)
-        }
+    var forceUpdate = ObservableField<Boolean>(false)
 
+    var phrase = ObservableField<String>("")
 
-    @get:Bindable
-    var definition: Definition = Definition()
-        set(definition) {
-            field = definition
-            notifyPropertyChanged(BR.definition)
-        }
+    var definition = ObservableField<String>()
+
+    val alternateDefinition = ObservableField<String>()
+
+    val suggestedPhrase = ObservableField<String>()
 
     private val dest: String
         get() {
@@ -63,46 +40,74 @@ class HomeViewModel @Inject constructor(private val resources: Resources,
                     .toLowerCase()
         }
 
-    private fun loadDefinition(dest: String = "") {
-        defineRepository.
-                getDefinition(definition.phrase.toLowerCase().trim(), dest)
-                .doOnSubscribe { isProgressViewVisible = true }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally { isProgressViewVisible = false }
-                .subscribe({
-                    definition = it
-                }, {
-                    LogUtils.log("Failed to get definition!")
-                })
-    }
+    fun loadDefinition(phrase: String?): Single<Definition> {
+        if (phrase == null || phrase.isEmpty()) {
+            return defineRepository.getRandomWord()
+                    .flatMap { defineRepository.getDefinition(it) }
+                    .doOnSubscribe { isProgressViewVisible.set(true) }
+                    .doOnSuccess { isProgressViewVisible.set(false) }
+                    .doOnError { isProgressViewVisible.set(false) }
 
-    fun loadDefinition() {
-        if (phrase.isNotEmpty()) {
-            loadDefinition(dest)
-            return
         }
 
-        defineRepository.
-                getDefinition()
-                .flatMap {
-                    this.phrase = it
-                    defineRepository.getDefinition(it, dest)
+        return defineRepository.getDefinition(phrase.toLowerCase().trim(), dest)
+                .doOnSubscribe { isProgressViewVisible.set(true) }
+                .doOnSuccess { isProgressViewVisible.set(false) }
+                .doOnError { isProgressViewVisible.set(false) }
+    }
+
+    fun handleApiSuccess(result: Definition) {
+
+        val tucs = result.tucs ?: return
+
+        phrase.set(result.phrase)
+
+        val definitionStr = tucs.dropWhile { it.phrase == null }
+                .map { it.phrase?.text }
+                .filter { it != null }
+                .take(Definition.MAX_DEFINITIONS).joinToString()
+
+        val altDefinitionStr =
+                tucs.takeWhile { it.meanings == null }
+                        .flatMap { it.meanings!! }
+                        .map { it.text }
+                        .filter { it != null }
+                        .take(Definition.MAX_DEFINITIONS).joinToString()
+
+
+        when {
+            definitionStr.isNotEmpty() -> definition.set(definitionStr)
+            definitionStr.isNotEmpty() && altDefinitionStr.isNotEmpty() -> alternateDefinition.set(altDefinitionStr)
+            definitionStr.isEmpty() && altDefinitionStr.isNotEmpty() -> definition.set(altDefinitionStr)
+            definitionStr.isEmpty() && altDefinitionStr.isEmpty() -> hasNoResults.set(true)
+        }
+
+        suggestedPhrase.set(
+                result.phrase.apply {
+                    when {
+                        endsWith("ing") -> replace("ing", "")
+                        endsWith("ed") -> replace("ed", "e")
+                        endsWith("led") -> replace("led", "")
+                        endsWith("ling") -> replace("ling", "")
+                        endsWith("tted") -> replace("tted", "t")
+                        endsWith("ted") -> replace("ted", "")
+                        endsWith("less") -> replace("less", "")
+                        endsWith("ly") -> replace("wise", "")
+                        endsWith("wise") -> replace("less", "")
+                        startsWith("pre") -> replace("pre", "")
+                        startsWith("extra") -> replace("extra", "")
+                        startsWith("over") -> replace("over", "")
+                        startsWith("un") -> replace("un", "")
+                        startsWith("im") -> replace("im", "")
+                        startsWith("anti") -> replace("anti", "")
+                        startsWith("auto") -> replace("auto", "")
+                        else -> phrase
+                    }
                 }
-                .doOnSubscribe { isProgressViewVisible = true }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally { isProgressViewVisible = false }
-                .subscribe({
-                    definition = it
-                }, {
-                    LogUtils.log("Failed to get definition!")
-                })
+        )
     }
 
-    fun loadSuggestedPhrase() {
-        loadDefinition(definition.suggestedPhrase)
-    }
+    fun handleApiFailure() {
 
+    }
 }
-

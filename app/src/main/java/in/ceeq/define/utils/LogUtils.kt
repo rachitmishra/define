@@ -2,7 +2,7 @@ package `in`.ceeq.define.utils
 
 import `in`.ceeq.define.BuildConfig
 import android.util.Log
-import com.google.firebase.crash.FirebaseCrash
+import com.crashlytics.android.Crashlytics
 
 object LogUtils {
     private val LOG_PREFIX = BuildConfig.APPLICATION_ID
@@ -32,7 +32,7 @@ object LogUtils {
         if (BuildConfig.DEBUG) {
             e.printStackTrace()
         } else {
-            FirebaseCrash.report(e)
+            Crashlytics.logException(e)
         }
     }
 }

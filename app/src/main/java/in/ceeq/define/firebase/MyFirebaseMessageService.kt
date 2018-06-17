@@ -7,7 +7,7 @@ import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.FORCE_UPDATE
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.NOTIFY
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.TRACKING
 import `in`.ceeq.define.firebase.MyFirebaseMessageService.Intents.UPDATE
-import `in`.ceeq.define.ui.main.HomeActivity
+import `in`.ceeq.define.ui.home.HomeActivity
 import `in`.ceeq.define.utils.LogUtils
 import `in`.ceeq.define.utils.PreferenceUtils
 import android.app.NotificationManager

@@ -8,4 +8,4 @@ import kotlinx.android.parcel.Parcelize
 data class Meaning(@SerializedName("language")
                    val language: String,
                    @SerializedName("text")
-                   val text: String): Parcelable
+                   val text: String?): Parcelable
