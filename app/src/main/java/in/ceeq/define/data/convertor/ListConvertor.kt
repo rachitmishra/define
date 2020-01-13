@@ -1,6 +1,6 @@
 package `in`.ceeq.define.data.convertor
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 
 
 object ListConverter {

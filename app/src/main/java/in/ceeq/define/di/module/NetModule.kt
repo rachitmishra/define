@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
-@Module(includes = arrayOf(AppModule::class))
+@Module(includes = [AppModule::class])
 class NetModule {
 
     @Module

@@ -8,15 +8,14 @@ import `in`.ceeq.define.utils.PermissionUtils
 import `in`.ceeq.define.utils.isNetConnected
 import `in`.ceeq.define.utils.setDataBindingView
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.content.ClipData
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.chip.Chip
-import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import com.google.android.material.chip.Chip
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import dagger.android.AndroidInjection
@@ -35,12 +34,14 @@ class HomeActivity : AppCompatActivity() {
         const val RC_CAMERA = 101
     }
 
+    private lateinit var binding: ActivityHomeBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
 
-        val activityHomeBinding = setDataBindingView<ActivityHomeBinding>(R.layout.activity_home)
-        activityHomeBinding.viewModel = homeViewModel
+        binding = setDataBindingView(R.layout.activity_home)
+        binding.viewModel = homeViewModel
 
         title = ""
 
@@ -79,10 +80,10 @@ class HomeActivity : AppCompatActivity() {
 
         homeViewModel.suggestedPhrases.observe(this, Observer {
             it?.forEach {
-                suggestedPhrases.addView(Chip(this).apply {
+                binding.suggestedPhrases.addView(Chip(this).apply {
                     text = it
                     setOnClickListener {
-                        suggestedPhrases.removeAllViews()
+                        binding.suggestedPhrases.removeAllViews()
                         loadDefinition((it as Chip).text.toString())
                     }
                 })
@@ -105,11 +106,11 @@ class HomeActivity : AppCompatActivity() {
         val fileUri = CameraHelper.getUriFromFilePath(this, cameraFileUrl!!)
         val image = FirebaseVisionImage.fromFilePath(this, fileUri)
         val detector = FirebaseVision.getInstance()
-                .visionTextDetector
+                .onDeviceTextRecognizer
 
-        detector.detectInImage(image)
+        detector.processImage(image)
                 .addOnSuccessListener {
-                    it.blocks
+                    it.textBlocks
                             .flatMap { it.lines }
                             .flatMap { it.text.split(' ') }.forEach {
                                 detectedPhrases.removeAllViews()
@@ -145,8 +146,8 @@ class HomeActivity : AppCompatActivity() {
             return
         }
 
-        val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboardManager.primaryClip = ClipData.newPlainText(homeViewModel.phrase.toString(), definition)
+        val clipboardManager = getSystemService(ClipboardManager::class.java)
+        clipboardManager.setPrimaryClip(ClipData.newPlainText(homeViewModel.phrase.toString(), definition))
         Toast.makeText(this, R.string.definition_copied, Toast.LENGTH_SHORT).show()
     }
 

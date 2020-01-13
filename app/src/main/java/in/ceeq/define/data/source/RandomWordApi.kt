@@ -1,6 +1,7 @@
 package `in`.ceeq.define.data.source
 
 
+import `in`.ceeq.define.BuildConfig
 import `in`.ceeq.define.data.entity.Word
 import io.reactivex.Single
 import retrofit2.Retrofit
@@ -10,7 +11,7 @@ import retrofit2.http.Headers
 interface RandomWordApi {
 
     @Headers("Accept: application/json", "Content-Type: application/json")
-    @GET("words.json/wordOfTheDay?api_key=57157fbcb579cb4dbb00300489e05020ef0d89bcde72ca060")
+    @GET("words.json/wordOfTheDay?api_key=${BuildConfig.API_KEY}")
     fun getRandomWord(): Single<Word>
 
     companion object {

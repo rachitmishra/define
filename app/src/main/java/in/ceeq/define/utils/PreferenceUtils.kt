@@ -61,7 +61,7 @@ fun PreferenceUtils.getBooleanPrefs(key: String, defaultValue: Boolean = false):
 }
 
 fun PreferenceUtils.getStringPrefs(key: String, defaultValue: String = ""): String {
-    return mSharedPreferences.getString(key, defaultValue)
+    return mSharedPreferences.getString(key, defaultValue) ?: ""
 }
 
 fun PreferenceUtils.getIntegerPrefs(key: String, defaultValue: Int = 0): Int {

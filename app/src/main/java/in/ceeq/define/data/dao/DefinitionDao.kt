@@ -1,7 +1,7 @@
 package `in`.ceeq.define.data.dao
 
 import `in`.ceeq.define.data.entity.Definition
-import android.arch.persistence.room.*
+import androidx.room.*
 
 /**
  * @Dao

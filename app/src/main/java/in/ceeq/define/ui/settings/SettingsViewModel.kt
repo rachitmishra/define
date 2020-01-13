@@ -6,8 +6,8 @@ import `in`.ceeq.define.BuildConfig
 import `in`.ceeq.define.R
 import `in`.ceeq.define.utils.PreferenceUtils
 import android.content.res.Resources
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import javax.inject.Inject
 

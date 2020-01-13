@@ -8,12 +8,13 @@ import `in`.ceeq.define.di.module.NetModule
 import android.app.Application
 import dagger.BindsInstance
 import dagger.Component
+import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import javax.inject.Singleton
 
 
 @Singleton
-@Component(modules = [AppModule::class, NetModule::class, ActivityBindings::class, DataModule::class])
+@Component(modules = [AppModule::class, NetModule::class, ActivityBindings::class, DataModule::class, AndroidInjectionModule::class])
 interface AppComponent : AndroidInjector<DefineApplication> {
     fun inject(application: Application)
 

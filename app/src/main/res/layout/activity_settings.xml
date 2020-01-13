@@ -43,7 +43,7 @@
                     tools:text="Love"
                     />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Display1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
                     tools:text="Settings"
                     />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,7 +67,7 @@
                     tools:text="@string/title_to_language"
                     />
 
-                <android.support.v7.widget.AppCompatSpinner
+                <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spinnerLanguage"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                     android:layout_marginTop="@dimen/top_margin_24"
                     android:background="@color/colorDivider"/>
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnFeedback"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
@@ -115,7 +115,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="@color/colorDivider"/>
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRateApp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
@@ -141,7 +141,7 @@
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
                     android:background="@color/colorDivider"/>
 
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnShareApp"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                     tools:text="Love"
                     />
 
-                <android.support.v7.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     style="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

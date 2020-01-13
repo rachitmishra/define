@@ -4,7 +4,7 @@ import `in`.ceeq.define.data.DefineDatabase
 import `in`.ceeq.define.data.dao.DefinitionDao
 import `in`.ceeq.define.data.entity.Definition
 import android.content.Context
-import android.support.annotation.NonNull
+import androidx.annotation.NonNull
 
 class LocalDefinitionDataSource(private val definitionDao: DefinitionDao) : DefinitionDataSource {
 

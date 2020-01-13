@@ -5,11 +5,11 @@ import `in`.ceeq.define.R
 import `in`.ceeq.define.data.DefineRepository
 import `in`.ceeq.define.data.entity.Definition
 import `in`.ceeq.define.utils.PreferenceUtils
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.content.res.Resources
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import android.text.Html
 import io.reactivex.Single
 import javax.inject.Inject
